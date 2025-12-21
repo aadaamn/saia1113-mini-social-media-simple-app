@@ -6,6 +6,7 @@ A simple social media app built with Python.
 
 ```bash
 pip install customtkinter pillow bcrypt
+pip install -r requirements.txt
 python main.py
 ```
 
