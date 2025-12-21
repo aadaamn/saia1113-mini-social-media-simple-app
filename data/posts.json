@@ -1,0 +1,34 @@
+{
+  "P001": {
+    "id": "P001",
+    "author": "U001",
+    "content": "wallpaper baru bro",
+    "image": "c:\\Users\\User\\Downloads\\Project dam's\\data\\images\\ca85dce5-a094-42e6-ae70-84a0f8d8b923.png",
+    "created": "2025-12-20T20:28:15.823042",
+    "likes": [
+      "U001"
+    ],
+    "comments": [
+      {
+        "author": "U001",
+        "text": "yo",
+        "created": "2025-12-20T20:28:41.000147"
+      }
+    ]
+  },
+  "P003": {
+    "id": "P003",
+    "author": "U002",
+    "content": "yo whats goon",
+    "image": "",
+    "created": "2025-12-20T20:31:12.557924",
+    "likes": [],
+    "comments": [
+      {
+        "author": "U001",
+        "text": "typo bro",
+        "created": "2025-12-21T00:49:01.081571"
+      }
+    ]
+  }
+}

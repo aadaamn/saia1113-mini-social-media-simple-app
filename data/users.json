@@ -1,0 +1,14 @@
+{
+  "U001": {
+    "id": "U001",
+    "username": "aadaamn",
+    "password": "$2b$12$wbP/z1FNnyN2m4pQhDye8ejAqHkErQc99tROOyI8ut1.f4fDXPJOK",
+    "created": "2025-12-20T20:18:46.456896"
+  },
+  "U002": {
+    "id": "U002",
+    "username": "enderomeda",
+    "password": "$2b$12$oHcUfg6i7MgChzkbJ7WAwuPtIBsJsPnlnFbvrwU7Igk0EhyCIoy8C",
+    "created": "2025-12-20T20:30:50.112727"
+  }
+}
