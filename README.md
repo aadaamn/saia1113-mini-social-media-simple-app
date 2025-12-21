@@ -33,10 +33,12 @@ The code is organized into simple sections:
 
 ## Data Structures Used
 
-Dictionary: Store users and posts in JSON |
-List: Store comments, feed items |
-Set: Track unique likes |
-Tuple: Store session (user_id, username) |
+| Data Structure | Usage |
+|----------------|-------|
+| Dictionary | Store users and posts in JSON |
+| List | Store comments, feed items |
+| Set | Track unique likes |
+| Tuple | Store session (user_id, username) |
 
 ## Files
 
