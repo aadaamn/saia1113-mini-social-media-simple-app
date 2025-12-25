@@ -1,15 +1,3 @@
-"""
-Mini Social Media Feed Simulator
-================================
-A simple social media app with login, posts, likes, and comments.
-
-Data Structures Used:
-- Dictionary: Store users and posts
-- List: Store comments and feed
-- Set: Track unique likes
-- Tuple: Session info
-"""
-
 import os
 import json
 import shutil
@@ -19,10 +7,6 @@ from datetime import datetime
 from PIL import Image
 import customtkinter as ctk
 from tkinter import filedialog
-
-# =============================================================================
-# SETUP
-# =============================================================================
 
 # Paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -45,9 +29,7 @@ BORDER = "#E0E5DC"
 RED = "#D64545"
 GREEN = "#4A7C4E"
 
-# =============================================================================
-# DATA FUNCTIONS
-# =============================================================================
+# Functions to store/load data
 
 def load_data(filepath):
     """Load JSON data from file."""
@@ -68,9 +50,7 @@ def save_data(filepath, data):
     except:
         return False
 
-# =============================================================================
-# USER FUNCTIONS
-# =============================================================================
+# Functions for user management
 
 def register(username, password):
     """Register new user. Returns (success, message)."""
@@ -116,9 +96,7 @@ def get_username(user_id):
     users = load_data(USERS_FILE)
     return users.get(user_id, {}).get("username", "Unknown")
 
-# =============================================================================
-# POST FUNCTIONS
-# =============================================================================
+# Functions for post management
 
 def create_post(user_id, content, image_path=""):
     """Create a new post."""
@@ -142,8 +120,8 @@ def create_post(user_id, content, image_path=""):
         "content": content,
         "image": saved_image,
         "created": datetime.now().isoformat(),
-        "likes": [],      # List used as Set (unique users)
-        "comments": []    # List of comment dicts
+        "likes": [],      
+        "comments": []    
     }
     
     save_data(POSTS_FILE, posts)
@@ -162,12 +140,12 @@ def toggle_like(user_id, post_id):
     """Toggle like on a post."""
     posts = load_data(POSTS_FILE)
     if post_id in posts:
-        likes = set(posts[post_id]["likes"])  # Convert to Set
+        likes = set(posts[post_id]["likes"])  
         if user_id in likes:
             likes.remove(user_id)
         else:
             likes.add(user_id)
-        posts[post_id]["likes"] = list(likes)  # Back to List
+        posts[post_id]["likes"] = list(likes) 
         save_data(POSTS_FILE, posts)
 
 def add_comment(user_id, post_id, text):
@@ -190,9 +168,7 @@ def delete_post(user_id, post_id):
         del posts[post_id]
         save_data(POSTS_FILE, posts)
 
-# =============================================================================
-# HELPER FUNCTIONS
-# =============================================================================
+# Utility functions
 
 def time_ago(iso_time):
     """Convert timestamp to '5m ago' format."""
@@ -218,7 +194,7 @@ def load_image(path, max_size=(350, 250)):
     return None
 
 # =============================================================================
-# MAIN APP
+# Main Application Class
 # =============================================================================
 
 class App(ctk.CTk):
@@ -241,9 +217,7 @@ class App(ctk.CTk):
         for w in self.winfo_children():
             w.destroy()
     
-    # -------------------------------------------------------------------------
-    # LOGIN SCREEN
-    # -------------------------------------------------------------------------
+    # Login/Register Screen
     
     def show_login(self):
         self.clear()
@@ -324,9 +298,7 @@ class App(ctk.CTk):
                       fg_color=OLIVE, hover_color=OLIVE_LIGHT,
                       command=do_register).pack(pady=10)
     
-    # -------------------------------------------------------------------------
-    # FEED SCREEN
-    # -------------------------------------------------------------------------
+    # FYP feed screen
     
     def show_feed(self):
         self.clear()
@@ -436,13 +408,11 @@ class App(ctk.CTk):
                          wraplength=400, anchor="w"
                          ).pack(fill="x", padx=15, pady=1)
     
-    # -------------------------------------------------------------------------
-    # CREATE POST SCREEN
-    # -------------------------------------------------------------------------
+    # Create Post Screen    
     
     def show_create(self):
         self.clear()
-        selected_image = {"path": ""}  # Use dict to store in closure
+        selected_image = {"path": ""} 
         
         # Header
         header = ctk.CTkFrame(self, fg_color=BG)
@@ -526,9 +496,7 @@ class App(ctk.CTk):
                       font=("", 15, "bold"), fg_color=OLIVE, hover_color=OLIVE_LIGHT,
                       command=do_post).pack(pady=20)
     
-    # -------------------------------------------------------------------------
-    # PROFILE SCREEN
-    # -------------------------------------------------------------------------
+    # Profile Screen
     
     def show_profile(self):
         self.clear()
@@ -604,10 +572,7 @@ class App(ctk.CTk):
         ctk.CTkButton(nav, text="🚪 Logout", fg_color=RED, hover_color="#B33",
                       command=self.show_login).pack(side="right", padx=5)
 
-
-# =============================================================================
-# RUN APP
-# =============================================================================
+# Run Application
 
 if __name__ == "__main__":
     print("Starting Mini Social Media Feed...")
