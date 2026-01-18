@@ -72,7 +72,7 @@ def initialize_sample_data():
         "1": {
             "id": "1",
             "author": "1",
-            "content": "wallpaper baru bro",
+            "content": "I am FEELING GREAT today!",
             "created": "2025-12-20T20:28:15.823042",
             "likes": ["1"],
             "comments": [
@@ -83,7 +83,7 @@ def initialize_sample_data():
         "2": {
             "id": "2",
             "author": "3",
-            "content": "Happy New Year!!",
+            "content": "Happy New Year gang!!",
             "created": "2026-01-01T22:47:24.053107",
             "likes": [],
             "comments": []
@@ -91,7 +91,7 @@ def initialize_sample_data():
         "3": {
             "id": "3",
             "author": "3",
-            "content": "DANISH THE ALPHA!",
+            "content": "DANISH THE BEST!",
             "created": "2026-01-01T22:51:16.256627",
             "likes": ["3"],
             "comments": []
@@ -183,8 +183,8 @@ def create_post(user_id, content):
         "author": user_id,
         "content": content,
         "created": datetime.now().isoformat(),
-        "likes": [],      # List of user IDs who liked the post
-        "comments": []    # List of comment dictionaries
+        "likes": [],      
+        "comments": []    
     }
     
     return True
@@ -278,7 +278,7 @@ class ZoboApp(ctk.CTk):
         super().__init__()
         
         # Window configuration
-        self.title("ZOBO - Social Feed")
+        self.title("ZOBO - Mini Social Media App")
         self.geometry("900x700")
         self.minsize(800, 600)
         ctk.set_appearance_mode("light")
@@ -301,7 +301,6 @@ class ZoboApp(ctk.CTk):
  
     # Login/Register Screens
     def show_login(self):
-        """Display the login screen."""
         self.clear()
         self.user = None
         
@@ -321,9 +320,6 @@ class ZoboApp(ctk.CTk):
         ctk.CTkLabel(deco_frame, text="Share moments.\nConnect with friends.",
                      font=("Segoe UI", 14), text_color="#E8E8E8",
                      justify="center").pack(pady=(10, 0))
-        
-        ctk.CTkLabel(left_panel, text="●", font=("", 80), text_color="#7A8B6A").place(x=20, y=50)
-        ctk.CTkLabel(left_panel, text="●", font=("", 120), text_color="#6B7C5A").place(x=220, y=480)
         
         # Right panel - Login form
         right_panel = ctk.CTkFrame(main, fg_color=BG)
@@ -417,9 +413,6 @@ class ZoboApp(ctk.CTk):
         ctk.CTkLabel(deco_frame, text="Join our community.\nStart sharing today.",
                      font=("Segoe UI", 14), text_color="#E8E8E8",
                      justify="center").pack(pady=(10, 0))
-        
-        ctk.CTkLabel(left_panel, text="●", font=("", 80), text_color="#7A8B6A").place(x=20, y=50)
-        ctk.CTkLabel(left_panel, text="●", font=("", 120), text_color="#6B7C5A").place(x=220, y=480)
         
         # Right panel
         right_panel = ctk.CTkFrame(main, fg_color=BG)
@@ -570,7 +563,6 @@ class ZoboApp(ctk.CTk):
                      text_color=TEXT_MUTED).pack(anchor="w", pady=(0, 10))
         
         def set_sort(mode):
-            """Change sort mode and refresh feed."""
             self.sort_mode = mode
             self.show_feed()
         
@@ -653,12 +645,6 @@ class ZoboApp(ctk.CTk):
         ctk.CTkLabel(author_info, text=time_ago(post["created"]),
                      font=("Segoe UI", 11), text_color=TEXT_MUTED).pack(anchor="w")
         
-        # Engagement stats in header
-        engagement = len(post["likes"]) + len(post["comments"])
-        if engagement > 0:
-            ctk.CTkLabel(header, text=f"{engagement} interactions", font=("Segoe UI", 11),
-                         text_color=TEXT_MUTED).pack(side="right")
-        
         # Post content
         ctk.CTkLabel(inner, text=post["content"], font=("Segoe UI", 13),
                      text_color=TEXT_PRIMARY, wraplength=480, justify="left", anchor="w"
@@ -675,8 +661,8 @@ class ZoboApp(ctk.CTk):
         likes = set(post["likes"])
         is_liked = self.user[0] in likes
         
+        # Function for handling like button click
         def do_like():
-            """Handle like button click."""
             toggle_like(self.user[0], post["id"])
             self.show_feed()
         
@@ -701,8 +687,8 @@ class ZoboApp(ctk.CTk):
                                       font=("Segoe UI", 11))
         comment_entry.pack(side="left", padx=8)
         
+        # Function for posting a comment
         def do_comment():
-            """Handle comment submission."""
             text = comment_entry.get().strip()
             if text:
                 add_comment(self.user[0], post["id"], text)
@@ -725,65 +711,64 @@ class ZoboApp(ctk.CTk):
                 ctk.CTkLabel(comment_row, text=f"@{c_author}: {c['text']}",
                              font=("Segoe UI", 11), text_color=TEXT_SECONDARY,
                              wraplength=450, anchor="w").pack(padx=12, pady=8, anchor="w")
-    
-    
-        # Create Post Screen
-        def show_create(self):
-            self.clear()
-            
-            # Header
-            header = ctk.CTkFrame(self, fg_color=BG_CARD, height=70, corner_radius=0)
-            header.pack(fill="x")
-            header.pack_propagate(False)
-            
-            header_inner = ctk.CTkFrame(header, fg_color="transparent")
-            header_inner.pack(fill="both", expand=True, padx=25)
-            
-            ctk.CTkButton(header_inner, text="← Back", width=80, height=35, corner_radius=8,
-                        fg_color=BG_SECONDARY, text_color=TEXT_PRIMARY, hover_color=BORDER,
-                        font=("Segoe UI", 12), command=self.show_feed).pack(side="left", pady=17)
-            
-            ctk.CTkLabel(header_inner, text="Create Post", font=("Segoe UI", 20, "bold"),
-                        text_color=TEXT_PRIMARY).pack(side="left", padx=20, pady=17)
-            
-            # Scrollable content area
-            scroll_container = ctk.CTkScrollableFrame(self, fg_color=BG)
-            scroll_container.pack(fill="both", expand=True, padx=25, pady=25)
-            
-            # Form card
-            card = ctk.CTkFrame(scroll_container, fg_color=BG_CARD, corner_radius=16)
-            card.pack(fill="x", padx=50, pady=(0, 20))
-            
-            form = ctk.CTkFrame(card, fg_color="transparent")
-            form.pack(fill="x", padx=40, pady=35)
-            
-            ctk.CTkLabel(form, text="What's on your mind?", font=("Segoe UI", 16, "bold"),
-                        text_color=TEXT_PRIMARY).pack(anchor="w")
-            ctk.CTkLabel(form, text="Share your thoughts with the community",
-                        font=("Segoe UI", 12), text_color=TEXT_MUTED).pack(anchor="w", pady=(3, 15))
-            
-            # Text area for post content
-            text_box = ctk.CTkTextbox(form, height=180, corner_radius=12,
-                                    fg_color=BG_SECONDARY, border_width=0,
-                                    font=("Segoe UI", 13))
-            text_box.pack(fill="x", pady=10)
-            
-            # Character count display
-            count_frame = ctk.CTkFrame(form, fg_color="transparent")
-            count_frame.pack(fill="x")
-            count_label = ctk.CTkLabel(count_frame, text="0 / 500 characters",
-                                        font=("Segoe UI", 11), text_color=TEXT_MUTED)
-            count_label.pack(side="right")
-            
-            def update_count(e=None):
-                n = len(text_box.get("1.0", "end-1c"))
-                count_label.configure(text=f"{n} / 500 characters",
-                                    text_color=RED if n > 500 else TEXT_MUTED)
-            text_box.bind("<KeyRelease>", update_count)
-            
-            # Message label for feedback
-            msg_label = ctk.CTkLabel(form, text="", font=("Segoe UI", 12))
-            msg_label.pack(pady=10)
+
+    # Create Post Screen
+    def show_create(self):
+        self.clear()
+        
+        # Header
+        header = ctk.CTkFrame(self, fg_color=BG_CARD, height=70, corner_radius=0)
+        header.pack(fill="x")
+        header.pack_propagate(False)
+        
+        header_inner = ctk.CTkFrame(header, fg_color="transparent")
+        header_inner.pack(fill="both", expand=True, padx=25)
+        
+        ctk.CTkButton(header_inner, text="← Back", width=80, height=35, corner_radius=8,
+                    fg_color=BG_SECONDARY, text_color=TEXT_PRIMARY, hover_color=BORDER,
+                    font=("Segoe UI", 12), command=self.show_feed).pack(side="left", pady=17)
+        
+        ctk.CTkLabel(header_inner, text="Create Post", font=("Segoe UI", 20, "bold"),
+                    text_color=TEXT_PRIMARY).pack(side="left", padx=20, pady=17)
+        
+        # Scrollable content area
+        scroll_container = ctk.CTkScrollableFrame(self, fg_color=BG)
+        scroll_container.pack(fill="both", expand=True, padx=25, pady=25)
+        
+        # Form card
+        card = ctk.CTkFrame(scroll_container, fg_color=BG_CARD, corner_radius=16)
+        card.pack(fill="x", padx=50, pady=(0, 20))
+        
+        form = ctk.CTkFrame(card, fg_color="transparent")
+        form.pack(fill="x", padx=40, pady=35)
+        
+        ctk.CTkLabel(form, text="What's on your mind?", font=("Segoe UI", 16, "bold"),
+                    text_color=TEXT_PRIMARY).pack(anchor="w")
+        ctk.CTkLabel(form, text="Share your thoughts with the community",
+                    font=("Segoe UI", 12), text_color=TEXT_MUTED).pack(anchor="w", pady=(3, 15))
+        
+        # Text area for post content
+        text_box = ctk.CTkTextbox(form, height=180, corner_radius=12,
+                                fg_color=BG_SECONDARY, border_width=0,
+                                font=("Segoe UI", 13))
+        text_box.pack(fill="x", pady=10)
+        
+        # Character count display
+        count_frame = ctk.CTkFrame(form, fg_color="transparent")
+        count_frame.pack(fill="x")
+        count_label = ctk.CTkLabel(count_frame, text="0 / 500 characters",
+                                    font=("Segoe UI", 11), text_color=TEXT_MUTED)
+        count_label.pack(side="right")
+        
+        def update_count(e=None):
+            n = len(text_box.get("1.0", "end-1c"))
+            count_label.configure(text=f"{n} / 500 characters",
+                                text_color=RED if n > 500 else TEXT_MUTED)
+        text_box.bind("<KeyRelease>", update_count)
+        
+        # Message label for feedback
+        msg_label = ctk.CTkLabel(form, text="", font=("Segoe UI", 12))
+        msg_label.pack(pady=10)
         
         def do_post():
             try:
@@ -812,7 +797,7 @@ class ZoboApp(ctk.CTk):
         ctk.CTkButton(form, text="Share Post", width=200, height=48, corner_radius=12,
                       fg_color=OLIVE, hover_color=OLIVE_DARK, font=("Segoe UI", 15, "bold"),
                       command=do_post).pack(pady=20)
-    
+
     # Profile Screen
     def show_profile(self):
         self.clear()
@@ -856,7 +841,7 @@ class ZoboApp(ctk.CTk):
         
         ctk.CTkLabel(info, text=f"@{self.user[1]}", font=("Segoe UI", 22, "bold"),
                      text_color=TEXT_PRIMARY).pack(anchor="w")
-        ctk.CTkLabel(info, text="ZOBO Member", font=("Segoe UI", 13),
+        ctk.CTkLabel(info, text="Member", font=("Segoe UI", 13),
                      text_color=TEXT_MUTED).pack(anchor="w")
         
         # Calculate stats
